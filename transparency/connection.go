@@ -107,10 +107,9 @@ func (c *LogServerConnection) GetLogEntries() ([]ct.LogEntry, error) {
 	}
 
 	if len(entries) < int(c.bucketSize) && c.end != c.treeSize {
-		c.end -= c.bucketSize
-		c.bucketSize = int64(len(entries)) - 1
-		c.end += c.bucketSize
-	 }
+		c.end = c.start + int64(len(entries))
+		c.bucketSize = int64(len(entries))
+	}
 
 	return entries, nil
 }
